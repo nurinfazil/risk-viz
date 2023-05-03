@@ -9,6 +9,7 @@ import MapRender from "@/components/mapRender";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// I integrated the Google Maps API following this tutorial as a guide: https://www.99darshan.com/posts/interactive-maps-using-nextjs-and-google-maps/
 export default function LandingPage() {
   type Data = {
     assetName: string;
@@ -17,6 +18,7 @@ export default function LandingPage() {
     businessCategory: string;
     riskRating: string;
     riskFactors: object;
+    year: bigint;
   };
 
   type Values = {
@@ -57,11 +59,9 @@ export default function LandingPage() {
     });
   }, []);
 
-  console.log(values);
-
   return (
     <div>
-      <MapRender />
+      <MapRender data={values} />
     </div>
   );
 }
