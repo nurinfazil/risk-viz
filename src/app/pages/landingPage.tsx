@@ -78,8 +78,8 @@ export default function LandingPage() {
 
   return (
     <div>
-      <div className="flex items-center	">
-        <Dropdown label={decade == 0 ? "Select Decade" : decade}>
+      <div className="pt-10 pl-10">
+        <Dropdown label={decade == 0 ? "Select Decade" : `${decade}s`}>
           {Array.from(uniqueYears.values())
             .sort()
             .map((year) => {
@@ -91,7 +91,7 @@ export default function LandingPage() {
                   }}
                 >
                   {" "}
-                  {year}
+                  {`${year}`}s
                 </Dropdown.Item>
               );
             })}

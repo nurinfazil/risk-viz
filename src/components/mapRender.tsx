@@ -26,7 +26,7 @@ const MapRender: NextPage<Values> = ({ data, decade }) => {
     () => ({
       disableDefaultUI: true,
       clickableIcons: true,
-      scrollwheel: false,
+      scrollwheel: true,
     }),
     []
   );
@@ -48,7 +48,7 @@ const MapRender: NextPage<Values> = ({ data, decade }) => {
           zoom={3}
           center={mapCenter}
           mapTypeId={google.maps.MapTypeId.ROADMAP}
-          mapContainerStyle={{ width: "800px", height: "800px" }}
+          mapContainerStyle={{ width: "100vw", height: "85vh" }}
           onLoad={() => console.log("Map Component Loaded...")}
         >
           <DrawByDecade data={data.data} decade={decade} />
