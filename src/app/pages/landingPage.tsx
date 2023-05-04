@@ -77,27 +77,37 @@ export default function LandingPage() {
   };
 
   return (
-    <div>
-      <div className="pt-10 pl-10">
-        <Dropdown label={decade == 0 ? "Select Decade" : `${decade}s`}>
-          {Array.from(uniqueYears.values())
-            .sort()
-            .map((year) => {
-              return (
-                <Dropdown.Item
-                  key={year}
-                  onClick={() => {
-                    handleDropdownSelect(year);
-                  }}
-                >
-                  {" "}
-                  {`${year}`}s
-                </Dropdown.Item>
-              );
-            })}
-        </Dropdown>
+    <div className="flex flex-col h-screen w-full">
+      <div className="flex-1">
+        <h1 className="text-4xl text-center pt-5">
+          RiskThinking AI Assessment
+        </h1>
+        <div className="pt-5 pl-10 w-full flex justify-center ">
+          <Dropdown label={decade == 0 ? "Select Decade" : `${decade}s`}>
+            {Array.from(uniqueYears.values())
+              .sort()
+              .map((year) => {
+                return (
+                  <Dropdown.Item
+                    key={year}
+                    onClick={() => {
+                      handleDropdownSelect(year);
+                    }}
+                  >
+                    {" "}
+                    {`${year}`}s
+                  </Dropdown.Item>
+                );
+              })}
+          </Dropdown>
+        </div>
+        {values ? <MapRender data={values} decade={decade} /> : null}
       </div>
-      {values ? <MapRender data={values} decade={decade} /> : null}
+
+      <div className="flex-1 grid grid-cols-2 color-white">
+        <div>Table</div>
+        <div>Charts</div>
+      </div>
     </div>
   );
 }

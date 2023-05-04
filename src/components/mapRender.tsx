@@ -42,13 +42,13 @@ const MapRender: NextPage<Values> = ({ data, decade }) => {
 
   return (
     <div>
-      <div className="pt-10">
+      <div className="pt-2">
         <GoogleMap
           options={mapOptions}
           zoom={3}
           center={mapCenter}
           mapTypeId={google.maps.MapTypeId.ROADMAP}
-          mapContainerStyle={{ width: "100vw", height: "85vh" }}
+          mapContainerStyle={{ width: "100%", height: "50vh" }}
           onLoad={() => console.log("Map Component Loaded...")}
         >
           <DrawByDecade data={data.data} decade={decade} />
