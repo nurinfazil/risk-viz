@@ -12,7 +12,7 @@ type Data = {
 };
 
 interface DrawbyDecadeProps {
-  data: Data[];
+  data: [];
   decade: number;
 }
 
@@ -31,16 +31,16 @@ const DrawByDecade: React.FC<DrawbyDecadeProps> = ({ data, decade }) => {
 
   return (
     <>
-      {data.map((entry: Data, i) => {
-        const markerIcon = getMarkerIcon(parseFloat(entry.riskRating));
+      {data.map((entry: any, i) => {
+        const markerIcon = getMarkerIcon(parseFloat(entry["Risk Rating"]));
 
         if (decade === 0) {
           return (
             <Marker
-              key={`${entry.lat}${entry.long}${i}`}
+              key={`${entry["Lat"]}${entry["Long"]}${i}`}
               position={{
-                lat: parseFloat(entry.lat),
-                lng: parseFloat(entry.long),
+                lat: parseFloat(entry["Lat"]),
+                lng: parseFloat(entry["Long"]),
               }}
               onMouseOver={() => setActiveMarker(i)}
               onMouseOut={() => setActiveMarker(null)}
@@ -49,20 +49,20 @@ const DrawByDecade: React.FC<DrawbyDecadeProps> = ({ data, decade }) => {
               {activeMarker === i && (
                 <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                   <div className="text-black">
-                    <div>Asset Name: {entry.assetName}</div>
-                    <div>Business Category: {entry.businessCategory}</div>
+                    <div>Asset Name: {entry["Asset Name"]}</div>
+                    <div>Business Category: {entry["Business Category"]}</div>
                   </div>
                 </InfoWindow>
               )}
             </Marker>
           );
-        } else if (parseInt(entry.year) === decade) {
+        } else if (parseInt(entry["Year"]) === decade) {
           return (
             <Marker
               key={`${entry.lat}${entry.long}${i}`}
               position={{
-                lat: parseFloat(entry.lat),
-                lng: parseFloat(entry.long),
+                lat: parseFloat(entry["Lat"]),
+                lng: parseFloat(entry["Long"]),
               }}
               onMouseOver={() => setActiveMarker(i)}
               onMouseOut={() => setActiveMarker(null)}
@@ -71,8 +71,8 @@ const DrawByDecade: React.FC<DrawbyDecadeProps> = ({ data, decade }) => {
               {activeMarker === i && (
                 <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                   <div className="text-black">
-                    <div>Asset Name: {entry.assetName}</div>
-                    <div>Business Category: {entry.businessCategory}</div>
+                    <div>Asset Name: {entry["Asset Name"]}</div>
+                    <div>Business Category: {entry["Business Category"]}</div>
                   </div>
                 </InfoWindow>
               )}

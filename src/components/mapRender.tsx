@@ -14,7 +14,7 @@ type Data = {
 };
 
 interface Values {
-  data: Data[];
+  data: [];
   decade: number;
 }
 
@@ -51,7 +51,7 @@ const MapRender: NextPage<Values> = ({ data, decade }) => {
           mapContainerStyle={{ width: "100%", height: "50vh" }}
           onLoad={() => console.log("Map Component Loaded...")}
         >
-          <DrawByDecade data={data.data} decade={decade} />
+          <DrawByDecade data={data} decade={decade} />
         </GoogleMap>
       </div>
     </div>
