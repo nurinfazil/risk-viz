@@ -1,7 +1,6 @@
-import { useJsApiLoader, GoogleMap, MarkerF } from "@react-google-maps/api";
+import { useMemo, useState, useEffect } from "react";
+import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
 import type { NextPage } from "next";
-import { useMemo, useState, useEffect, use } from "react";
-import DrawByDecade from "./DrawByDecade";
 import DrawMap from "./DrawMap";
 
 type Data = {
@@ -19,6 +18,8 @@ interface Values {
   decade: number;
 }
 
+// This page renders the Map
+// I integrated the Google Maps API following this tutorial: https://www.99darshan.com/posts/interactive-maps-using-nextjs-and-google-maps/
 const MapRender: NextPage<Values> = ({ data, decade }) => {
   const [libraries] = useState(["places"]);
   const mapCenter = useMemo(() => ({ lat: 50.027558, lng: -104.597682 }), []);
@@ -38,6 +39,8 @@ const MapRender: NextPage<Values> = ({ data, decade }) => {
     libraries: libraries as any,
   });
 
+  // Updates data shown on the map depending on the decade
+  // 0 means no decade is chosen
   useEffect(() => {
     if (data) {
       if (decade == 0) {
@@ -64,10 +67,7 @@ const MapRender: NextPage<Values> = ({ data, decade }) => {
           center={mapCenter}
           mapTypeId={google.maps.MapTypeId.ROADMAP}
           mapContainerStyle={{ width: "100%", height: "50vh" }}
-          onLoad={() => console.log("Map Component Loaded...")}
         >
-          {/* <DrawByDecade data={data} decade={decade} /> */}
-          {/* // TODO: filter data by decade */}
           <DrawMap data={filteredData} decade={decade} />
         </GoogleMap>
       </div>

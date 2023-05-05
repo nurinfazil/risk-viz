@@ -10,7 +10,6 @@ interface DrawMapProps {
 
 const DrawMap: React.FC<DrawMapProps> = ({ data, decade }) => {
   // Group markers by the lat and long locations
-  const [uniqueLatLong, setUniqueLatLong] = useState<[]>([]);
   const [reformattedData, setReformattedData] = useState<any>({});
   const [activeMarker, setActiveMarker] = useState<null | number>(null);
 
@@ -23,6 +22,7 @@ const DrawMap: React.FC<DrawMapProps> = ({ data, decade }) => {
     let minValue = Math.min(...riskVals);
 
     // This logic was derived with the help of chat GPT
+    // I asked, "Given a maximum value and minimum value, how can I output a colour between yellow (min) and red (max)?"
     const range = maxValue - minValue;
     const normalizedValue = (value - minValue) / range;
     const hue = Math.floor((1 - normalizedValue) * 60);
@@ -35,8 +35,20 @@ const DrawMap: React.FC<DrawMapProps> = ({ data, decade }) => {
     };
   }
 
+  // This logic implements clustering on the map. Since many points overlap each other on the map, the map becomes
+  // glitchy when the user interacts with it. To make the interface smoother, I grouped data points at the same location
+  // into one marker.
+
+  // The logic in the useEffect below creates an object which has:
+  // key: tuple of unique lat,long pair
+  // value: {
+  //         Asset Names: array of Asset Names at the (lat, long) location,
+  //         Business Categories: array of Business Catergories at the (lat, long) location,
+  //         Risk Rating: Sum of risk ratings at the (lat, long) location. Can be used to determine how high the risk is at the location.
+  //        }
+
+  // The object gets stored in the reformattedData state.
   useEffect(() => {
-    // get unique values for Location, Asset Name and Business Category
     if (data) {
       const allLatLong = data.map((row) => {
         return [row["Lat"], row["Long"]];
@@ -86,17 +98,21 @@ const DrawMap: React.FC<DrawMapProps> = ({ data, decade }) => {
         });
       });
 
-      //   setUniqueLatLong(uniqueLatLong);
-      //   console.log(newData);
       setReformattedData(newData);
     }
   }, [data]);
 
   return (
     <>
+      {/* Display the markers from reformattedData on the map */}
       {Object.keys(reformattedData).map((location: any, i) => {
         const markerIcon = getMarkerIcon(
           reformattedData[location]["Risk Rating"]
+        );
+
+        const lat = parseFloat(location.substring(0, location.indexOf(",")));
+        const long = parseFloat(
+          location.substring(location.indexOf(",") + 1, location.length)
         );
 
         return (
@@ -106,16 +122,19 @@ const DrawMap: React.FC<DrawMapProps> = ({ data, decade }) => {
             onMouseOut={() => setActiveMarker(null)}
             icon={markerIcon}
             position={{
-              lat: parseFloat(location.substring(0, location.indexOf(","))),
-              lng: parseFloat(
-                location.substring(location.indexOf(",") + 1, location.length)
-              ),
+              lat: lat,
+              lng: long,
             }}
           >
             {" "}
             {activeMarker === i && (
               <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                 <div className="text-black">
+                  <div>
+                    <strong>Location: </strong>
+                    {`${lat}, ${long}`}
+                  </div>
+                  <br></br>
                   <div>
                     <strong>Asset Names:</strong>{" "}
                     {reformattedData[location]["Asset Names"].reduce(

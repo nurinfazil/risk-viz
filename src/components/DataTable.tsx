@@ -4,16 +4,6 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-type Data = {
-  assetName: string;
-  lat: string;
-  long: string;
-  businessCategory: string;
-  riskRating: string;
-  riskFactors: object;
-  year: string;
-};
-
 interface DataTableProps {
   data: [];
   decade: number;
@@ -21,14 +11,10 @@ interface DataTableProps {
 }
 
 const DataTable: React.FC<DataTableProps> = ({ data, decade, headerNames }) => {
-  //   console.log(headerNames);
-  // console.log(data);
-
   const [rowData, setRowData] = useState<{}[]>([]);
   const [columnDefs, setColumnDefs] = useState<{}[]>([]);
 
   function configRows(headerNames: string[]) {
-    // console.log("hello config rows");
     let cols = headerNames.map((header, i) => {
       let colConfig: {
         field: string;
@@ -48,7 +34,6 @@ const DataTable: React.FC<DataTableProps> = ({ data, decade, headerNames }) => {
       return colConfig;
     });
 
-    // console.log(cols);
     return cols;
   }
 
@@ -60,7 +45,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, decade, headerNames }) => {
   useEffect(() => {
     setColumnDefs(configRows(headerNames));
 
-    // Filter the year column based on the selected decade
+    // If the decade filter gets changed, then update the table to filter on the decade
     if (decade !== 0) {
       const filteredData = data.filter((row: any) => {
         const year = parseInt(row["Year"]);

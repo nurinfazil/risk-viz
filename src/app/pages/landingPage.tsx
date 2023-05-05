@@ -2,17 +2,14 @@
 
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import Papa, { ParseResult } from "papaparse";
+import Link from "next/link";
+import { Dropdown } from "flowbite-react";
+
+import Papa from "papaparse";
 import MapRender from "../../components/mapRender";
 import DataTable from "../../components/DataTable";
-import { Dropdown } from "flowbite-react";
 import DataChart from "../../components/DataChart";
 
-const inter = Inter({ subsets: ["latin"] });
-
-// I integrated the Google Maps API following this tutorial as a guide: https://www.99darshan.com/posts/interactive-maps-using-nextjs-and-google-maps/
 export default function LandingPage() {
   const [values, setValues] = useState<[] | undefined>();
   const [decade, setDecade] = useState<number>(0);
@@ -38,6 +35,7 @@ export default function LandingPage() {
   ];
 
   useEffect(() => {
+    // I followed this tutorial to understand how to parse a csv: https://dev.to/mahdi_falamarzi/how-to-read-csv-file-in-typescript-react-app-106h
     Papa.parse("/data.csv", {
       header: true,
 
@@ -67,6 +65,7 @@ export default function LandingPage() {
       skipEmptyLines: true,
       delimiter: ",",
       complete: (results: any) => {
+        // Integrate each of the risk factors into the data as columns
         const newData: any = [];
         results.data.forEach((row: any) => {
           const newRow = { ...row };
@@ -78,14 +77,13 @@ export default function LandingPage() {
           newData.push(newRow);
         });
 
-        // console.log(newData);
         setValues(newData);
       },
     });
   }, []);
 
   useEffect(() => {
-    // get unique values for Location, Asset Name and Business Category
+    // Get unique values for Location, Asset Name and Business Category
     if (values) {
       const allLatLong = values.map((row) => {
         return [row["Lat"], row["Long"]];
@@ -115,16 +113,9 @@ export default function LandingPage() {
     }
   }, [values]);
 
+  // If any of the filters change (location, asset or business), this useEffect is called to filter the data
   useEffect(() => {
     var modifiedData: any = values;
-
-    // Filter by decade
-    // if (decade !== 0) {
-    //   modifiedData = modifiedData.filter((row: any) => {
-    //     const year = parseInt(row["Year"]);
-    //     return year == decade;
-    //   });
-    // }
 
     // Filter by location
     if (selectedLocation !== "All") {
@@ -182,9 +173,22 @@ export default function LandingPage() {
 
   return (
     <div className="w-full mx-10">
-      <h1 className="text-4xl text-center pt-5">riskthinking.AI Work Sample</h1>
+      <div className="text-4xl text-center pt-5">
+        riskthinking.AI Work Sample
+      </div>
+      <p className="text-center pt-3">
+        By{" "}
+        <Link
+          href="https://nurinfazil.com/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <u>Nurin Fazil</u>
+        </Link>
+      </p>
 
-      <div className="pt-5 pl-10 w-full flex justify-center ">
+      {/* FILTERS */}
+      <div className="flex pt-5 justify-evenly pb-5">
         <Dropdown label={decade == 0 ? "Select Decade" : `${decade}s`}>
           {Array.from(uniqueYears.values())
             .sort()
@@ -202,43 +206,30 @@ export default function LandingPage() {
               );
             })}
         </Dropdown>
-      </div>
-
-      {values ? <MapRender data={filteredData} decade={decade} /> : null}
-
-      <div>
-        <DataTable
-          data={filteredData}
-          decade={decade}
-          headerNames={headerNames}
-        />
-      </div>
-
-      <div className="pt-5">
-        <div className="flex justify-evenly pb-5">
-          <Dropdown
-            label={
-              selectedLocation == "All"
-                ? "Location (All)"
-                : `${selectedLocation[0]}, ${selectedLocation[1]}`
-            }
-          >
-            {uniqueLatLong.map((location) => {
-              return (
-                <Dropdown.Item
-                  key={`${location[0]}, ${location[1]}`}
-                  onClick={() => {
-                    handleChartDropdownSelect(location, "location");
-                  }}
-                >
-                  {location == "All" ? "All" : `${location[0]}, ${location[1]}`}
-                </Dropdown.Item>
-              );
-            })}
-          </Dropdown>
-          <Dropdown
-            label={selectedAsset == "All" ? "Asset Name (All)" : selectedAsset}
-          >
+        <Dropdown
+          label={
+            selectedLocation == "All"
+              ? "Location (All)"
+              : `${selectedLocation[0]}, ${selectedLocation[1]}`
+          }
+        >
+          {uniqueLatLong.map((location) => {
+            return (
+              <Dropdown.Item
+                key={`${location[0]}, ${location[1]}`}
+                onClick={() => {
+                  handleChartDropdownSelect(location, "location");
+                }}
+              >
+                {location == "All" ? "All" : `${location[0]}, ${location[1]}`}
+              </Dropdown.Item>
+            );
+          })}
+        </Dropdown>
+        <Dropdown
+          label={selectedAsset == "All" ? "Asset Name (All)" : selectedAsset}
+        >
+          <div className="max-h-96 overflow-y-scroll">
             {uniqueAsset.map((asset) => {
               return (
                 <Dropdown.Item
@@ -251,28 +242,42 @@ export default function LandingPage() {
                 </Dropdown.Item>
               );
             })}
-          </Dropdown>
-          <Dropdown
-            label={
-              selectedBusiness == "All"
-                ? "Business Category (All)"
-                : selectedBusiness
-            }
-          >
-            {uniqueBusiness.map((business) => {
-              return (
-                <Dropdown.Item
-                  key={business}
-                  onClick={() => {
-                    handleChartDropdownSelect(business, "business");
-                  }}
-                >
-                  {business}
-                </Dropdown.Item>
-              );
-            })}
-          </Dropdown>
-        </div>
+          </div>
+        </Dropdown>
+        <Dropdown
+          label={
+            selectedBusiness == "All"
+              ? "Business Category (All)"
+              : selectedBusiness
+          }
+        >
+          {uniqueBusiness.map((business) => {
+            return (
+              <Dropdown.Item
+                key={business}
+                onClick={() => {
+                  handleChartDropdownSelect(business, "business");
+                }}
+              >
+                {business}
+              </Dropdown.Item>
+            );
+          })}
+        </Dropdown>
+      </div>
+
+      {/* MAP */}
+      {values ? <MapRender data={filteredData} decade={decade} /> : null}
+
+      {/* TABLE */}
+      <DataTable
+        data={filteredData}
+        decade={decade}
+        headerNames={headerNames}
+      />
+
+      {/* CHART */}
+      <div className="pt-5">
         <DataChart filteredData={filteredData} />
       </div>
     </div>

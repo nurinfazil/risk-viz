@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import React from "react";
-import { Scatter, Line } from "react-chartjs-2";
+import { Scatter } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   LineController,
@@ -26,6 +26,7 @@ ChartJS.register(
 );
 
 const DataChart: React.FC<DataChartProps> = ({ filteredData }) => {
+  // Transforms data for the scatter plot
   function transformDataForScatter(data: any) {
     let reformattedData = [];
 
@@ -38,6 +39,7 @@ const DataChart: React.FC<DataChartProps> = ({ filteredData }) => {
     return reformattedData;
   }
 
+  // Calculates the average risk rating for a year and transforms the data for the line chart
   function transformDataForLine(data: any) {
     let averageRiskRatingData: { x: any; y: any }[] = [];
 
