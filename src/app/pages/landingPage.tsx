@@ -267,7 +267,13 @@ export default function LandingPage() {
       </div>
 
       {/* MAP */}
-      {values ? <MapRender data={filteredData} decade={decade} /> : null}
+      {values ? (
+        <MapRender
+          data={filteredData}
+          decade={decade}
+          setSelectedLocation={setSelectedLocation}
+        />
+      ) : null}
 
       {/* TABLE */}
       <DataTable

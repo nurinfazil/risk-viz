@@ -5,10 +5,10 @@ import { Marker, InfoWindow } from "@react-google-maps/api";
 
 interface DrawMapProps {
   data: [];
-  decade: number;
+  setSelectedLocation: any;
 }
 
-const DrawMap: React.FC<DrawMapProps> = ({ data, decade }) => {
+const DrawMap: React.FC<DrawMapProps> = ({ data, setSelectedLocation }) => {
   // Group markers by the lat and long locations
   const [reformattedData, setReformattedData] = useState<any>({});
   const [activeMarker, setActiveMarker] = useState<null | number>(null);
@@ -124,6 +124,9 @@ const DrawMap: React.FC<DrawMapProps> = ({ data, decade }) => {
             position={{
               lat: lat,
               lng: long,
+            }}
+            onClick={() => {
+              setSelectedLocation([lat, long]);
             }}
           >
             {" "}

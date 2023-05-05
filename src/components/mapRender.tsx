@@ -3,24 +3,15 @@ import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
 import type { NextPage } from "next";
 import DrawMap from "./DrawMap";
 
-type Data = {
-  assetName: string;
-  lat: string;
-  long: string;
-  businessCategory: string;
-  riskRating: string;
-  riskFactors: object;
-  year: string;
-};
-
 interface Values {
   data: [];
   decade: number;
+  setSelectedLocation: any;
 }
 
 // This page renders the Map
 // I integrated the Google Maps API following this tutorial: https://www.99darshan.com/posts/interactive-maps-using-nextjs-and-google-maps/
-const MapRender: NextPage<Values> = ({ data, decade }) => {
+const MapRender: NextPage<Values> = ({ data, decade, setSelectedLocation }) => {
   const [libraries] = useState(["places"]);
   const mapCenter = useMemo(() => ({ lat: 50.027558, lng: -104.597682 }), []);
   const [filteredData, setFilteredData] = useState<any>(data);
@@ -68,7 +59,10 @@ const MapRender: NextPage<Values> = ({ data, decade }) => {
           mapTypeId={google.maps.MapTypeId.ROADMAP}
           mapContainerStyle={{ width: "100%", height: "50vh" }}
         >
-          <DrawMap data={filteredData} decade={decade} />
+          <DrawMap
+            data={filteredData}
+            setSelectedLocation={setSelectedLocation}
+          />
         </GoogleMap>
       </div>
     </div>
