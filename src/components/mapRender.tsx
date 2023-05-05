@@ -45,7 +45,7 @@ const MapRender: NextPage<Values> = ({ data, decade }) => {
       <div className="pt-2">
         <GoogleMap
           options={mapOptions}
-          zoom={3}
+          zoom={4}
           center={mapCenter}
           mapTypeId={google.maps.MapTypeId.ROADMAP}
           mapContainerStyle={{ width: "100%", height: "50vh" }}

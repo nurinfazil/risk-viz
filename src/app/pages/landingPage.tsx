@@ -8,6 +8,7 @@ import Papa, { ParseResult } from "papaparse";
 import MapRender from "@/components/MapRender";
 import DataTable from "@/components/DataTable";
 import { Dropdown } from "flowbite-react";
+import ChartSection from "@/components/ChartSection";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -132,7 +133,9 @@ export default function LandingPage() {
         <DataTable data={values} decade={decade} headerNames={headerNames} />
       </div>
 
-      <div>Charts</div>
+      <div className="pt-5">
+        <ChartSection data={values} />
+      </div>
     </div>
   );
 }

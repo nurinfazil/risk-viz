@@ -23,7 +23,7 @@ interface DataTableProps {
 
 const DataTable: React.FC<DataTableProps> = ({ data, decade, headerNames }) => {
   //   console.log(headerNames);
-  console.log(data);
+  // console.log(data);
 
   const [rowData, setRowData] = useState<{}[]>([]);
   const [columnDefs, setColumnDefs] = useState<{}[]>([]);
@@ -49,7 +49,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, decade, headerNames }) => {
       return colConfig;
     });
 
-    console.log(cols);
+    // console.log(cols);
     return cols;
   }
 
