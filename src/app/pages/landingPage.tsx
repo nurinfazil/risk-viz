@@ -5,11 +5,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import Papa, { ParseResult } from "papaparse";
-import MapRender from "../../../src/components/MapRender";
-import DataTable from "../../../src/components/DataTable";
+import MapRender from "../../components/mapRender";
+import DataTable from "../../components/DataTable";
 import { Dropdown } from "flowbite-react";
-import DataChart from "../../../src/components/DataChart";
-import { AnyMxRecord } from "dns";
+import DataChart from "../../components/DataChart";
 
 const inter = Inter({ subsets: ["latin"] });
 
