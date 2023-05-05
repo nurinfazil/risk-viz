@@ -204,7 +204,7 @@ export default function LandingPage() {
         </Dropdown>
       </div>
 
-      {values ? <MapRender data={values} decade={decade} /> : null}
+      {values ? <MapRender data={filteredData} decade={decade} /> : null}
 
       <div>
         <DataTable
