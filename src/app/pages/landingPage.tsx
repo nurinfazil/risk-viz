@@ -134,7 +134,7 @@ export default function LandingPage() {
       </div>
 
       <div className="pt-5">
-        <ChartSection data={values} />
+        <ChartSection data={values} decade={decade} />
       </div>
     </div>
   );
