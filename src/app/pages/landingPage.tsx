@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import Papa, { ParseResult } from "papaparse";
-import MapRender from "@/components/MapRender";
-import DataTable from "@/components/DataTable";
+import MapRender from "../../../src/components/MapRender";
+import DataTable from "../../../src/components/DataTable";
 import { Dropdown } from "flowbite-react";
-import DataChart from "@/components/DataChart";
+import DataChart from "../../../src/components/DataChart";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -182,7 +182,7 @@ export default function LandingPage() {
 
   return (
     <div className="w-full mx-10">
-      <h1 className="text-4xl text-center pt-5">RiskThinking AI Assessment</h1>
+      <h1 className="text-4xl text-center pt-5">riskthinking.AI Work Sample</h1>
 
       <div className="pt-5 pl-10 w-full flex justify-center ">
         <Dropdown label={decade == 0 ? "Select Decade" : `${decade}s`}>
