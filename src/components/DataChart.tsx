@@ -4,6 +4,7 @@ import React from "react";
 import { Scatter, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
+  LineController,
   LinearScale,
   PointElement,
   LineElement,
@@ -15,7 +16,14 @@ interface DataChartProps {
   filteredData: [];
 }
 
-ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
+ChartJS.register(
+  LinearScale,
+  LineController,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend
+);
 
 const DataChart: React.FC<DataChartProps> = ({ filteredData }) => {
   function transformDataForScatter(data: any) {
