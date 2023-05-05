@@ -174,7 +174,7 @@ export default function LandingPage() {
   return (
     <div className="w-full mx-10">
       <div className="text-4xl text-center pt-5">
-        riskthinking.AI Work Sample
+        RiskThinking.AI Work Sample
       </div>
       <p className="text-center pt-3">
         By{" "}
