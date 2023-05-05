@@ -6,6 +6,7 @@ Demo link can be found [here](https://main--thriving-lily-cd9b17.netlify.app/)
 
 - Next.js
 - TypeScript
+- Tailwind
 - Google Maps API
 - AG Grid
 - Chart.js
