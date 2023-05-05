@@ -15,7 +15,6 @@ type Data = {
 };
 
 interface DataTableProps {
-  oldData: [];
   data: [];
   decade: number;
   headerNames: string[];
@@ -63,7 +62,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, decade, headerNames }) => {
 
     // Filter the year column based on the selected decade
     if (decade !== 0) {
-      const filteredData = data.filter((row: Data) => {
+      const filteredData = data.filter((row: any) => {
         const year = parseInt(row["Year"]);
         return year == decade;
       });

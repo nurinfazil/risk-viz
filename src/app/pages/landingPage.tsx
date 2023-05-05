@@ -9,6 +9,7 @@ import MapRender from "../../../src/components/MapRender";
 import DataTable from "../../../src/components/DataTable";
 import { Dropdown } from "flowbite-react";
 import DataChart from "../../../src/components/DataChart";
+import { AnyMxRecord } from "dns";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +18,9 @@ export default function LandingPage() {
   const [values, setValues] = useState<[] | undefined>();
   const [decade, setDecade] = useState<number>(0);
   const [headerNames, setHeaderNames] = useState<string[]>([]);
-  const [uniqueLatLong, setUniqueLatLong] = useState<[]>([]);
-  const [uniqueAsset, setUniqueAsset] = useState<[]>([]);
-  const [uniqueBusiness, setUniqueBusiness] = useState<[]>([]);
+  const [uniqueLatLong, setUniqueLatLong] = useState<string[]>([]);
+  const [uniqueAsset, setUniqueAsset] = useState<string[]>([]);
+  const [uniqueBusiness, setUniqueBusiness] = useState<string[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<any>("All");
   const [selectedAsset, setSelectedAsset] = useState<string>("All");
   const [selectedBusiness, setSelectedBusiness] = useState<string>("All");
@@ -66,8 +67,8 @@ export default function LandingPage() {
       download: true,
       skipEmptyLines: true,
       delimiter: ",",
-      complete: (results: ParseResult<Data>) => {
-        const newData = [];
+      complete: (results: any) => {
+        const newData: any = [];
         results.data.forEach((row: any) => {
           const newRow = { ...row };
           riskFactorNames.forEach((header) => {
@@ -92,23 +93,23 @@ export default function LandingPage() {
       });
 
       let uniqueLatLong = Array.from(
-        new Set(allLatLong.map(JSON.stringify))
-      ).map(JSON.parse);
+        new Set(allLatLong.map((latLong) => JSON.stringify(latLong, null, 2)))
+      ).map((str) => JSON.parse(str, undefined));
 
-      setUniqueLatLong(["All"].concat(uniqueLatLong));
+      setUniqueLatLong((prevState) => ["All"].concat(uniqueLatLong));
 
       const allAsset = values.map((row) => {
         return row["Asset Name"];
       });
 
-      let uniqueAsset: Set<number> = new Set<number>(allAsset);
+      let uniqueAsset: Set<any> = new Set<any>(allAsset);
       setUniqueAsset(["All"].concat(Array.from(uniqueAsset.values())));
 
       const allBusiness = values.map((row) => {
         return row["Business Category"];
       });
 
-      let uniqueBusiness: Set<number> = new Set<number>(allBusiness);
+      let uniqueBusiness: Set<any> = new Set<any>(allBusiness);
       setUniqueBusiness(["All"].concat(Array.from(uniqueBusiness.values())));
 
       setFilteredData(values);
@@ -153,8 +154,8 @@ export default function LandingPage() {
     setFilteredData(modifiedData);
   }, [selectedLocation, selectedBusiness, selectedAsset]);
 
-  let allYears: number[] = [];
-  let uniqueYears: Set<number> = new Set([]);
+  let allYears: any[] = [];
+  let uniqueYears: Set<any> = new Set([]);
 
   if (values) {
     allYears = values.map((entry) => {
@@ -164,7 +165,7 @@ export default function LandingPage() {
     uniqueYears = new Set<number>(allYears);
   }
 
-  const handleDropdownSelect = (year) => {
+  const handleDropdownSelect = (year: any) => {
     setDecade(year);
   };
 

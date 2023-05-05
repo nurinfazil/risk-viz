@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React from "react";
 import { Scatter, Line } from "react-chartjs-2";
 import {
@@ -20,7 +22,7 @@ const DataChart: React.FC<DataChartProps> = ({ filteredData }) => {
     let reformattedData = [];
 
     if (data) {
-      reformattedData = data.map((row) => {
+      reformattedData = data.map((row: any) => {
         return { x: row["Year"], y: row["Risk Rating"] };
       });
     }
@@ -29,11 +31,10 @@ const DataChart: React.FC<DataChartProps> = ({ filteredData }) => {
   }
 
   function transformDataForLine(data: any) {
-    console.log(data);
     let averageRiskRatingData: { x: any; y: any }[] = [];
 
     if (data) {
-      const reformattedData = data.reduce((acc: {}, row: any) => {
+      const reformattedData = data.reduce((acc: any, row: any) => {
         const year = row["Year"];
         const riskRating = parseFloat(row["Risk Rating"]);
         if (!acc[year]) {
@@ -59,8 +60,6 @@ const DataChart: React.FC<DataChartProps> = ({ filteredData }) => {
 
     return averageRiskRatingData;
   }
-
-  transformDataForLine(filteredData);
 
   const data = {
     labels: ["Scatter", "Line"],
@@ -103,7 +102,7 @@ const DataChart: React.FC<DataChartProps> = ({ filteredData }) => {
     plugins: {
       tooltip: {
         callbacks: {
-          label: function (tooltipItem) {
+          label: function (tooltipItem: any) {
             const assetName = filteredData[tooltipItem.dataIndex]["Asset Name"];
             const riskRating =
               filteredData[tooltipItem.dataIndex]["Risk Rating"];
