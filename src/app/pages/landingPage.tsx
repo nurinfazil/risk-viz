@@ -174,8 +174,9 @@ export default function LandingPage() {
   return (
     <div className="w-full mx-10">
       <div className="text-4xl text-center pt-5">
-        RiskThinking.AI Work Sample
+        Risk Visualization in Canada
       </div>
+
       <p className="text-center pt-3">
         By{" "}
         <Link
@@ -185,6 +186,19 @@ export default function LandingPage() {
         >
           <u>Nurin Fazil</u>
         </Link>
+      </p>
+
+      <p className="text-center pt-3">
+        Use this application to visualize risk data in Canada via an interactive
+        map, table and chart. Data comes from the{" "}
+        <Link
+          href="https://docs.google.com/spreadsheets/d/1Y_yiT-_7IimioBvcqiCPwLzTLazfdRyzZ4k3cpQXiAw/edit?usp=sharing"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <u>Climate Risk Rating dataset</u>
+        </Link>
+        .
       </p>
 
       {/* FILTERS */}
