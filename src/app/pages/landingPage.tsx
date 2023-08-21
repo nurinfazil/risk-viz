@@ -178,17 +178,6 @@ export default function LandingPage() {
       </div>
 
       <p className="text-center pt-3">
-        By{" "}
-        <Link
-          href="https://nurinfazil.com/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <u>Nurin Fazil</u>
-        </Link>
-      </p>
-
-      <p className="text-center pt-3">
         Use this application to visualize risk data in Canada via an interactive
         map, table and chart. Data comes from the{" "}
         <Link
@@ -300,6 +289,17 @@ export default function LandingPage() {
       <div className="pt-5">
         <DataChart filteredData={filteredData} />
       </div>
+      <br></br>
+      <p className="text-center pt-3">
+        Copyright © 2023{" "}
+        <Link
+          href="https://nurinfazil.com/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <u>Nurin Fazil</u>
+        </Link>
+      </p>
     </div>
   );
 }
