@@ -4,8 +4,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "RiskThinking.AI Work Sample | Nurin Fazil",
-  description: "RiskThiking.AI Work Sample by Nurin Fazil",
+  title: "Risk Visualization in Canada | Nurin Fazil",
+  description: "Risk Visualization in Canada by Nurin Fazil",
 };
 
 export default function RootLayout({
